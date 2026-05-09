@@ -510,7 +510,7 @@ mod tests {
     #[test]
     fn test_self_prediction_with_perfect_autocorrelation() {
         // Constant series: perfect autocorrelation (but zero variance — edge case)
-        let mut fp = FleetPredictor::new(1);
+        let fp = FleetPredictor::new(1);
         let a = vec![5.0, 5.0, 5.0, 5.0, 5.0];
         let acc = fp.self_prediction_accuracy(&[a]);
         assert!((acc - 0.0).abs() < 1e-10);
@@ -518,7 +518,7 @@ mod tests {
 
     #[test]
     fn test_self_prediction_with_sine() {
-        let mut fp = FleetPredictor::new(2);
+        let fp = FleetPredictor::new(2);
         let mut a = Vec::new();
         let mut b = Vec::new();
         for i in 0..100 {
@@ -565,7 +565,7 @@ mod tests {
 
     #[test]
     fn test_empty_history() {
-        let mut fp = FleetPredictor::new(2);
+        let fp = FleetPredictor::new(2);
         let history: Vec<Vec<f64>> = vec![vec![], vec![]];
         let preds = fp.predict(0, &history);
         assert!(preds.is_empty());
@@ -650,7 +650,7 @@ mod tests {
         let a: Vec<f64> = (0..n).map(|i| (i as f64 * 0.3).sin()).collect();
         let b: Vec<f64> = (0..n).map(|i| (i as f64 * 0.3 + 0.5).cos()).collect();
 
-        let mut fp = FleetPredictor::new(2);
+        let fp = FleetPredictor::new(2);
         let acc = fp.self_prediction_accuracy(&[a, b]);
         assert!(acc >= 0.0);
     }
